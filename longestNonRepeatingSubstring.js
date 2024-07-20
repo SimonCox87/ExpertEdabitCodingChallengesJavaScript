@@ -14,136 +14,74 @@
 //     If multiple substrings tie in length, return the one which occurs first.
 //     Bonus: Can you solve this problem in linear time?
 
-// aaccddeeffb
+function longestNonrepeatingSubstring(str) {
+    let last_seen = {};
+    let start = 0;
+    let max_len = 0;
+    let max_start = 0;
 
-// function longestNonrepeatingSubstring(str) {
-// 	let longest = "";
-//     let current = "";
-//     let long_len = longest.length;
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] in last_seen && last_seen[str[i]] >= start) {
+            start = last_seen[str[i]] + 1;  
+        }
 
-//     for (let i = 0; i < str.length; i++) {
-//         // if (long_len >= str.length - i){
-//         //     return longest;
-//         // }
+        last_seen[str[i]] = i;
+        let current_len = i - start + 1;
 
-//         if (current.includes(str[i])) {
-//             if (current.length > longest.length) {
-//                 longest = current;
-//                 current = "" + str[i];
-//             }
-//             else {
-//                 current = "" + str[i];
-//             } 
+        if (current_len > max_len) {
+            max_len = current_len;
+            max_start = start;
+        }
+    }
 
-            
-//         }
+    return str.substring(max_start,max_start + max_len);
+}
 
-//         else {
-//             current += str[i];
-//         }
-
-//     }
-
-//     return longest.length > current.length ? longest : current;
-// }
-
-// function longestNonrepeatingSubstring(str) {
-//     for (let i = str.length - 1; i >= 0; i--) {
-//         if (!(str.slice(0, i).includes(str[i]))) {
-//             return str.slice(0, i + 1);
-//         }
-//     }
-// }
-
-// function longestNonrepeatingSubstring(s) {
-//     let lastSeen = {};
-//     let start = 0;
-//     let maxLen = 0;
-//     let maxStart = 0;
-    
-//     for (let end = 0; end < s.length; end++) {
-//         let char = s[end];
-//         if (char in lastSeen && lastSeen[char] >= start) {
-//             start = lastSeen[char] + 1;
-//         }
-//         lastSeen[char] = end;
-//         let currentLen = end - start + 1;
-//         if (currentLen > maxLen) {
-//             maxLen = currentLen;
-//             maxStart = start;
-//         }
-//     }
-    
-//     return s.substring(maxStart, maxStart + maxLen);
-// }
-
-
-
-// function longestNonrepeatingSubstring(str) {
-//     let matches = []
-//     let l = 0;
-//     let longest_len = 0;
-
-//     let
-
-    
-//     for (let i = 1; i <  str.length; i++) {
-//      Add if statement along the lines;
-//          str.slice(start,i).includes(i)?
-//          start = str.indexOf(i)?
-
-//     }
-
-//     return matches
-// }
-
-
-console.log(longestNonrepeatingSubstring("abcabcbb")) // ➞ "abc"
-// console.log(longestNonrepeatingSubstring("aaaaaa")) // ➞ "a"
-// console.log(longestNonrepeatingSubstring("abcde")) // ➞ "abcde"
-// console.log(longestNonrepeatingSubstring("abcda")) // ➞ "abcd"
-
-// console.log(longestNonrepeatingSubstring("abcabcbb")) //, "abc")
-// console.log(longestNonrepeatingSubstring("aaaaaa")) //, "a")
-// console.log(longestNonrepeatingSubstring("abcde")) // "abcde")
-// console.log(longestNonrepeatingSubstring("abcda")) //, "abcd")
-// console.log(longestNonrepeatingSubstring("aaccddeeffb")) //, "ac")
-// console.log(longestNonrepeatingSubstring("abdde")) //, "abd")
-// console.log(longestNonrepeatingSubstring("ccdddcccc")) //, "cd")
-// console.log(longestNonrepeatingSubstring("cdxdxccxc")) //, "cdx")
-// console.log(longestNonrepeatingSubstring("abddefgh")) //, "defgh")
-// console.log(longestNonrepeatingSubstring("abcdabcd")) //, "abcd")
-// console.log(longestNonrepeatingSubstring("abddebcc")) //, "debc")
-// console.log(longestNonrepeatingSubstring("xyxxyzyzy")) //, "xyz")
-// console.log(longestNonrepeatingSubstring("kjlmjsdeee")) //, "lmjsde")
+console.log(longestNonrepeatingSubstring("abcabcbb")) //, "abc")
+console.log(longestNonrepeatingSubstring("aaaaaa")) //, "a")
+console.log(longestNonrepeatingSubstring("abcde")) // "abcde")
+console.log(longestNonrepeatingSubstring("abcda")) //, "abcd")
+console.log(longestNonrepeatingSubstring("aaccddeeffb")) //, "ac")
+console.log(longestNonrepeatingSubstring("abdde")) //, "abd")
+console.log(longestNonrepeatingSubstring("ccdddcccc")) //, "cd")
+console.log(longestNonrepeatingSubstring("cdxdxccxc")) //, "cdx")
+console.log(longestNonrepeatingSubstring("abddefgh")) //, "defgh")
+console.log(longestNonrepeatingSubstring("abcdabcd")) //, "abcd")
+console.log(longestNonrepeatingSubstring("abddebcc")) //, "debc")
+console.log(longestNonrepeatingSubstring("xyxxyzyzy")) //, "xyz")
+console.log(longestNonrepeatingSubstring("kjlmjsdeee")) //, "lmjsde")
 console.log(longestNonrepeatingSubstring("kjlmjsdfew")) //, "lmjsdfew")
 console.log(longestNonrepeatingSubstring("kjlmjsdfewii")) //, "lmjsdfewi")
 console.log(longestNonrepeatingSubstring("kjlmjjiiiidfewii")) //, "idfew")
 console.log(longestNonrepeatingSubstring("kjlmjjiiiidfiwii")) //, "kjlm")
 
-// establish a left and right bound which you can slice the string by. 
-// check that i in the slice.  if it isn't right bound increases by one.
-// if it is longest == slice. then left bound of slice == i. continue the process
-// if another repating letter is found and current is longer than longest, logest == current.
+// establish object variable called last_seen which contains a list of all the characters in str and their indexes (these will be the 
+// last indexes of that particular character once we have looped through the whole string).
 
-// function longestNonrepeatingSubstring(s) {
-//     let lastSeen = {};
-//     let start = 0;
-//     let maxLen = 0;
-//     let maxStart = 0;
-    
-//     for (let end = 0; end < s.length; end++) {
-//         let char = s[end];
-//         if (char in lastSeen && lastSeen[char] >= start) {
-//             start = lastSeen[char] + 1;
-//         }
-//         lastSeen[char] = end;
-//         let currentLen = end - start + 1;
-//         if (currentLen > maxLen) {
-//             maxLen = currentLen;
-//             maxStart = start;
-//         }
-//     }
-    
-//     return s.substring(maxStart, maxStart + maxLen);
-// }
+// establish start variable. this will be the start of the slice that we are checking for repeats.  If a repeat is found within a slice
+// then this variable equals the index of this repeating character from the last_seen variable plus one so that the next slice that is analysed 
+// for repeats begins one place after the index of the repeated character where it was originally seen.
+
+// max_len is a variable that captures the length of the longest slice containing no repeating characters.  Calculated by subtacting i which
+// is the current index of the loop by start and then adding 1 to find the length.
+
+// max start is the index from which the longest slice of str with no repeating characters begins from.
+
+// for loop loops through all the characters of the str variable passed to the longestNonRepeatingSubstring function as the function's sole
+// parameter.
+
+// first if statement: if the str[i] is already in last_seen object this means that str[i] is a repeating character and if the index of the
+// repeating character is greater than or equal to start (this prevents us from going back on ourselves and analysing a slice for repeats which
+// we have already established has a different repeating character).  If this is true then start variable is updated to the most recently found
+// index of the character in the last_seen object + 1 so that are new slice starts one index beyond this index.
+
+// last_seen variable is updated.  with the character and it's index within the string.
+
+// current_length variable created.  current length is the current index of the for loop subtracted by the start variable and this sum is added
+// by one to find the length of the current slice without non-repeating characters.
+
+// second if statement: if current_len > max_len then the new max_len = current_len and max_start is updated to equal start.
+
+// at the end of the loop return the substring of str which represents the longest slice containing non-repeating characters.  this is achieved
+// by using the substring string method with the following arguments. first argument is the index at which the substring is to start from, in this 
+// case the max_start variable, and the second argument is found by adding max_start and max_len variables. 
